@@ -1,0 +1,2 @@
+1,Mango,My mango is good,24.0,2,2025-05-14,C:\Users\DELL\Downloads\image (2).png
+2,Banana,My Banana is good,20.0,4,2025-05-12,C:\Users\DELL\Downloads\image (2).png
