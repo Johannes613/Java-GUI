@@ -1,6 +1,5 @@
-package org.example.farmdelivery;
+package app;
 
-import app.ShoppingPage;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,19 +11,17 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.Cart;
+import model.Product;
+//import org.example.farmdelivery.ProductCard;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
-
 public class CartPage extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-
+        //get cart items from cart
+        Cart cart=new Cart();
+        ArrayList<Product> productCards=cart.getCartItems();
         AnchorPane root = new AnchorPane();
         root.setPrefSize(1200, 800);
 
@@ -42,13 +39,12 @@ public class CartPage extends Application {
         leftSection.setPrefWidth(600);
         leftSection.setStyle("-fx-background-color: #f0f0f0;"); // Example styling
 
-        Label title = new Label("Oder Information details");
+        Label title = new Label("Order Information Details");
         title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
         VBox.setMargin(title, new Insets(60, 0, 20, 0));
         Label loginHeader = new Label("Farm Delivery Login");
         loginHeader.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
         VBox.setMargin(loginHeader, new Insets(0, 0, 60, 0));
-
 //         userName field
         TextField userNameField = new TextField();
         userNameField.setPromptText("Enter Your Name");
@@ -56,7 +52,7 @@ public class CartPage extends Application {
         VBox userNameBox = new VBox(20, new Label("Username"), userNameField);
         userNameBox.setAlignment(Pos.CENTER_LEFT);
         VBox.setMargin(userNameBox, new Insets(0, 0, 30, 0));
-//phone number field
+    //phone number field
         TextField phoneNumber = new TextField();
         phoneNumber.setPromptText("Enter Your Phone Number");
         phoneNumber.setPadding(new Insets(10));
@@ -95,16 +91,11 @@ public class CartPage extends Application {
         //cart details label
         Label label = new Label("Cart Product details");
         label.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
-        Label totalPriceLabel=new Label("Total Price: AED 2500");
+        Label totalPriceLabel=new Label("Total Price: AED "+cart.getTotalPrice());
         totalPriceLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
         HBox totalPriceBox=new HBox(totalPriceLabel);
-        //cart product
-         //product Image
-        //get cart items from cart
-        Cart cart=new Cart();
-        ArrayList<ProductCard> productCards=cart.getCartItems();
+
 //        System.out.println(productCards);
-        int total=6;
         //scroll pane to hold VBOx
         ScrollPane cartScroll = new ScrollPane();
         cartScroll.setPrefHeight(600);
@@ -114,19 +105,18 @@ public class CartPage extends Application {
         VBox cartContainer = new VBox(); // Container for all cart items
         cartContainer.setSpacing(10);    // Spacing between products
 //        System.out.println(productCards);
-
-        for(ProductCard pdc:productCards) {
-            ImageView imageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream(pdc.getImgUrl()))));
+        for(Product pdc:productCards) {
+            ImageView imageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream(pdc.getImageUrl()))));
             imageView.setFitWidth(100);
             imageView.setFitHeight(100);
 
-            Label productLabel = new Label(pdc.getProductName());
+            Label productLabel = new Label(pdc.getName());
             productLabel.setTextFill(Color.WHITE);
 
-            Label productPrice = new Label("AED " + (pdc.getProductPrice()*pdc.getQuantity()));
+            Label productPrice = new Label("AED " + (pdc.getPrice()*pdc.getQuantityAvailable()));
             productPrice.setTextFill(Color.WHITE);
 
-            Label productQuantity = new Label("Quantity: " + pdc.getQuantity());
+            Label productQuantity = new Label("Quantity: " + pdc.getQuantityAvailable());
             productQuantity.setTextFill(Color.WHITE);
 
             VBox prodInfoVbox = new VBox(productLabel, productPrice, productQuantity);
@@ -145,13 +135,11 @@ public class CartPage extends Application {
 
         cartScroll.setContent(cartContainer);  // Set the VBox as ScrollPane content
 
-
         Button loginBtn = new Button("Goto Shopping");
         loginBtn.setPrefWidth(200);
         loginBtn.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white;");
         loginBtn.setPadding(new Insets(10));
         loginBtn.setOnAction(e -> {
-//            handleLogin(e);
             ShoppingPage shp=new ShoppingPage();
             shp.start(primaryStage);
             System.out.println("Login button clicked");
@@ -166,7 +154,6 @@ public class CartPage extends Application {
         primaryStage.setTitle("Cart Page");
         primaryStage.show();
     }
-
     public static void main(String[] args) {
         launch(CartPage.CartApp.class);
     }
@@ -177,7 +164,6 @@ public class CartPage extends Application {
             new CartPage().start(primaryStage);
         }
     }
-
 }
 
 

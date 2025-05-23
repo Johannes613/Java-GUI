@@ -7,7 +7,6 @@ import java.util.ArrayList;
 public class ProductSearchEngine implements IProductSearch {
     public ArrayList<Product> searchBySeason(LocalDate date){
         return new ArrayList<Product>();
-
     }
     public ArrayList<Product> searchByProximity(int radius){
         return new ArrayList<Product>();
@@ -16,5 +15,8 @@ public class ProductSearchEngine implements IProductSearch {
         return new ArrayList<Product>();
     }
 
+    @Override
+    public void addToCart(int productId) {
 
+    }
 }

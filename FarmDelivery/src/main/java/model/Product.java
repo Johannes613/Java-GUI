@@ -2,10 +2,11 @@ package model;
 
 import model.Exceptions.HarvestDateException;
 
+
 import java.time.LocalDate;
 import java.util.Date;
+public class Product implements Comparable<Product>{
 
-public class Product {
     private int productId;
     private String name;
     private String description;
@@ -15,7 +16,7 @@ public class Product {
     private LocalDate harvestDate;
     private String productCategory;
 
-    public Product(int productId, String name, String description, double price, int quantityAvailable, LocalDate harvestDate,String imageUrl){
+    public Product(int productId, String name, String description, double price, int quantityAvailable, LocalDate harvestDate,String imageUrl,String productCategory){
         this.productId = productId;
         this.name = name;
         this.description = description;
@@ -23,6 +24,7 @@ public class Product {
         this.quantityAvailable = quantityAvailable;
         this.harvestDate = harvestDate;
         this.imageUrl=imageUrl;
+        this.productCategory=productCategory;
     }
     public String getName() {
         return name;
@@ -63,6 +65,9 @@ public class Product {
         return description;
     }
 
+    public String getProductCategory() {
+        return productCategory;
+    }
 
     public void setDescription(String description) {
         this.description = description;
@@ -90,6 +95,13 @@ public class Product {
     }
     public String toFileString() {
         return productId + "," + name + "," + description + "," + price + "," + quantityAvailable + "," + harvestDate + "," + imageUrl +  "\n";
+    }
+    //the following methods are important
+    public int compareTo(Product o) {
+        return (int) (this.price-o.getPrice());
+    }
+    public void increaseQuantity(){
+        this.quantityAvailable++;
     }
 }
 

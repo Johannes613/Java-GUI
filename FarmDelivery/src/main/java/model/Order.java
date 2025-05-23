@@ -1,12 +1,10 @@
 package model;
-
 public class Order {
     private int orderId;
     private int productId;
     private int quantity;
     private String deliveryAddress;
     private String orderStatus;
-
     public Order(int orderId, int productId, int quantity, String deliveryAddress, String orderStatus) {
         this.orderId = orderId;
         this.productId = productId;
@@ -14,7 +12,6 @@ public class Order {
         this.deliveryAddress = deliveryAddress;
         this.orderStatus = orderStatus;
     }
-
     public int getOrderId() {
         return orderId;
     }

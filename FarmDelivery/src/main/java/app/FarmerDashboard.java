@@ -124,9 +124,8 @@ public class FarmerDashboard extends Application {
                 String desc = descArea.getText();
                 LocalDate dateSelected = datePicker.getValue();
 
-                Product product = new Product(productId, name, desc, price, quantity, dateSelected, imgUrl);
+                Product product = new Product(productId, name, desc, price, quantity, dateSelected, imgUrl,"Diary Products");
                 saveProduct(product);
-
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Product saved successfully!");
                 alert.show();
 
@@ -242,7 +241,7 @@ public class FarmerDashboard extends Application {
 //                LocalDate dateSelected = LocalDate.parse(parameters[5]);
                 LocalDate dateSelected = LocalDate.now();
                 String imgUrl = parameters[6];
-                Product newProduct = new Product(prdId, prdName, prdDsc, prdPrice, quantity, dateSelected, imgUrl);
+                Product newProduct = new Product(prdId, prdName, prdDsc, prdPrice, quantity, dateSelected, imgUrl,"Diary Product");
                 productList.add(newProduct);
             }
 
