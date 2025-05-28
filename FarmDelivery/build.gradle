@@ -6,7 +6,6 @@ plugins {
     id 'org.beryx.jlink' version '2.25.0'
 }
 
-//group 'org.example'
 version '1.0-SNAPSHOT'
 
 repositories {
@@ -25,19 +24,30 @@ tasks.withType(JavaCompile) {
 }
 
 application {
-//    mainModule = 'org.example.farmdelivery'
-//    mainClass = 'org.example.farmdelivery.HelloApplication'
+    // Set your main module and main class if using modules
+    // mainModule = 'org.example.farmdelivery'
+    // mainClass = 'org.example.farmdelivery.HelloApplication'
 }
 
 javafx {
     version = '21'
-    modules = ['javafx.controls', 'javafx.fxml']
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.web']
 }
 
 dependencies {
-
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+
+    // JSON library
+    implementation 'org.json:json:20230227'
+
+    // JavaFX dependencies for platform-specific modules
+    def platform = org.gradle.internal.os.OperatingSystem.current().isWindows() ? "win" :
+            org.gradle.internal.os.OperatingSystem.current().isMacOsX() ? "mac" : "linux"
+
+    implementation "org.openjfx:javafx-controls:21:${platform}"
+    implementation "org.openjfx:javafx-fxml:21:${platform}"
+    implementation "org.openjfx:javafx-web:21:${platform}"
 }
 
 test {

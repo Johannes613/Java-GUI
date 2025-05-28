@@ -1,5 +1,7 @@
 package model;
 public class Order {
+    private  String customerName;
+    private Product product;
     private int orderId;
     private int productId;
     private int quantity;
@@ -12,8 +14,20 @@ public class Order {
         this.deliveryAddress = deliveryAddress;
         this.orderStatus = orderStatus;
     }
+    public Order(int orderId, int productId, int quantity,String customerName,Product product) {
+        this.orderId = orderId;
+        this.productId = productId;
+        this.quantity = quantity;
+        this.customerName = customerName;
+        this.product = product;
+
+    }
     public int getOrderId() {
         return orderId;
+    }
+
+    public Product getProduct() {
+        return product;
     }
 
     public void setOrderId(int orderId) {

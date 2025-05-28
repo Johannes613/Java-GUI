@@ -11,8 +11,10 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import model.Exceptions.OutOfSeasonException;
 import model.Product;
 import model.ProductInventory;
+import java.io.File;
 import java.util.Comparator;
 import java.util.Objects;
 public class ShoppingPage {
@@ -43,7 +45,7 @@ public class ShoppingPage {
         ImageView logoImage = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/org/example/farmdelivery/images/logo.png"))));
         logoImage.setFitWidth(100);
         logoImage.setFitHeight(100);
-//        titleLabel.getStyleClass().add("nav-title");
+//      titleLabel.getStyleClass().add("nav-title");
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
@@ -64,7 +66,7 @@ public class ShoppingPage {
         ordersBtn.setPadding(new Insets(10));
         ordersBtn.setStyle("-fx-cursor:hand");
         ordersBtn.setOnAction(e ->{
-            Orders orderPage=new Orders();
+            DeliverySystem orderPage=new DeliverySystem();
             try {
                 orderPage.start(primaryStage);
             } catch (Exception ex) {
@@ -100,25 +102,72 @@ public class ShoppingPage {
         banner.setPadding(new Insets(30));
 
         Label bannerTitle = new Label("Welcome to UAE Farm Product Delivery App!");
-        bannerTitle.setTextFill(Color.RED);
+        bannerTitle.setTextFill(Color.GREEN);
         bannerTitle.setFont(Font.font(40));
         bannerTitle.setStyle("-fx-font-weight:700");
         Label bannerText = new Label("Get the freshest produce delivered to your door!");
         bannerText.setFont(Font.font(20));
         bannerText.setStyle("-fx-font-weight:600");
-        bannerText.setTextFill(Color.rgb(255, 153, 0));
+        bannerText.setTextFill(Color.DARKGREEN);
 
         banner.getChildren().addAll(bannerTitle, bannerText);
 
         // Filters
         HBox filters = new HBox(20);
         filters.getStyleClass().add("filter-section");
+        //seasonal filter
+        HBox seasonalBox = new HBox(10);
+        seasonalBox.setAlignment(Pos.CENTER_LEFT);
+        Label seasonalLabel = new Label("Filter by Season:");
+        seasonalLabel.setFont(new Font(16));
+        seasonalLabel.setTextFill(Color.DARKBLUE);
+        seasonalLabel.setStyle("-fx-font-weight:600");
+        ComboBox<String> seasonalComboBox = new ComboBox<>();
+        seasonalComboBox.setMinWidth(150);
+        seasonalComboBox.setMaxWidth(150);
+//      // Set the style for the ComboBox
+        seasonalComboBox.setStyle("-fx-font-size: 14px; -fx-padding: 5px;");
+        seasonalComboBox.setBackground(new Background(new BackgroundFill(Color.WHITE,new CornerRadii(10),Insets.EMPTY)));
+        seasonalComboBox.setPadding(new Insets(5));
+        seasonalComboBox.setFocusTraversable(false);
+        seasonalComboBox.setStyle("-fx-cursor:hand");
+        seasonalComboBox.setEditable(false);
+        seasonalComboBox.setPromptText("All Seasons");
+        seasonalComboBox.setItems(FXCollections.observableArrayList(
+                "All Seasons", "Spring", "Summer", "Autumn", "Winter"
+        ));
+        seasonalBox.getChildren().addAll(seasonalLabel, seasonalComboBox);
+        //add functionality to each combox item
+        seasonalComboBox.valueProperty().addListener((obs, oldVal, newVal) -> {
+            try{
+                ObservableList<Product> filtered = pi.filterBySeason(newVal);
+                refreshProductList(filtered);
+            }catch (OutOfSeasonException e){
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Out of Season");
+                alert.setHeaderText("No products available for " + newVal);
+                alert.setContentText("Please select a different season.");
+                alert.showAndWait();
+            }
+        });
 
         // Category Filter
         HBox categoryBox = new HBox(10);
         categoryBox.setAlignment(Pos.CENTER_LEFT);
         Label categoryLabel = new Label("Filter by Category:");
+        categoryLabel.setFont(new Font(16));
+        categoryLabel.setTextFill(Color.DARKBLUE);
+        categoryLabel.setStyle("-fx-font-weight:600");
+        categoryLabel.setPadding(new Insets(0, 0, 0, 10));
+
         categoryComboBox = new ComboBox<>();
+        categoryComboBox.setMinWidth(150);
+        categoryComboBox.setMaxWidth(150);
+        // Set the style for the ComboBox
+        categoryComboBox.setStyle("-fx-font-size: 14px; -fx-padding: 5px;");
+        categoryComboBox.setBackground(new Background(new BackgroundFill(Color.WHITE,new CornerRadii(10),Insets.EMPTY)));
+        categoryComboBox.setPadding(new Insets(5));
+        categoryComboBox.setFocusTraversable(false);
         categoryComboBox.setPromptText("All");
         categoryComboBox.setItems(FXCollections.observableArrayList(
                 "All", "Milk Products", "Fruits", "Vegetables", "Cereal Products"
@@ -134,7 +183,17 @@ public class ShoppingPage {
         HBox priceSortBox = new HBox(10);
         priceSortBox.setAlignment(Pos.CENTER_LEFT);
         Label sortLabel = new Label("Sort by Price:");
+        sortLabel.setFont(new Font(16));
+        sortLabel.setTextFill(Color.DARKBLUE);
+        sortLabel.setStyle("-fx-font-weight:600");
+        sortLabel.setPadding(new Insets(0, 0, 0, 10));
+        priceSortBox.setPadding(new Insets(0, 0, 0, 10));
         Button incPriceBtn = new Button("Increasing");
+        incPriceBtn.setBackground(new Background(new BackgroundFill(Color.WHITE,new CornerRadii(10),Insets.EMPTY)));
+        incPriceBtn.setPadding(new Insets(10));
+        incPriceBtn.setStyle("-fx-cursor:hand");
+        incPriceBtn.setPrefHeight(40);
+
         //sort products in increasing price order
         incPriceBtn.setOnAction(e -> {
             FXCollections.sort(productCards, Comparator.comparingDouble(Product::getPrice));
@@ -144,6 +203,11 @@ public class ShoppingPage {
 
 
         Button decPriceBtn = new Button("Decreasing");
+        decPriceBtn.setBackground(new Background(new BackgroundFill(Color.WHITE,new CornerRadii(10),Insets.EMPTY)));
+        decPriceBtn.setPadding(new Insets(10));
+        decPriceBtn.setStyle("-fx-cursor:hand");
+        decPriceBtn.setPrefHeight(40);
+
         //sort products in decreasing price order
         decPriceBtn.setOnAction(e -> {
             FXCollections.sort(productCards, Comparator.comparingDouble(Product::getPrice).reversed());
@@ -154,13 +218,31 @@ public class ShoppingPage {
         HBox searchBoxContainer = new HBox(10);
         searchBoxContainer.setAlignment(Pos.CENTER_LEFT);
         Label searchLabel = new Label("Search:");
+        searchLabel.setFont(new Font(16));
+        searchLabel.setTextFill(Color.DARKBLUE);
+        searchLabel.setStyle("-fx-font-weight:600");
+        searchLabel.setPadding(new Insets(0, 0, 0, 10));
+        searchBoxContainer.setPadding(new Insets(0, 0, 0, 10));
+        searchBoxContainer.setAlignment(Pos.CENTER_LEFT);
         searchBox = new TextField();
+        searchBox.setMinWidth(200);
+        searchBox.setMaxWidth(200);
+        // Set the style for the TextField
+        searchBox.setStyle("-fx-font-size: 14px; -fx-padding: 10px;");
+        searchBox.setBackground(new Background(new BackgroundFill(Color.WHITE,new CornerRadii(10),Insets.EMPTY)));
+        searchBox.setPadding(new Insets(20));
+        searchBox.setFocusTraversable(false);
         searchBox.setPromptText("Search product");
         searchButton = new Button("Search");
+        searchButton.setBackground(new Background(new BackgroundFill(Color.WHITE,new CornerRadii(10),Insets.EMPTY)));
+        searchButton.setPadding(new Insets(10));
+        searchButton.setStyle("-fx-cursor:hand");
+        searchButton.setPrefWidth(100);
+        //add functionality to search button
         searchButton.setOnAction(e -> handleSearch());
         searchBoxContainer.getChildren().addAll(searchLabel, searchBox, searchButton);
 
-        filters.getChildren().addAll(categoryBox, priceSortBox, searchBoxContainer);
+        filters.getChildren().addAll(seasonalBox,categoryBox, priceSortBox, searchBoxContainer);
 
         // Product List
         productList = new FlowPane();
@@ -174,6 +256,7 @@ public class ShoppingPage {
 
 
         ScrollPane scrollPane = new ScrollPane(productList);
+
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -188,42 +271,52 @@ public class ShoppingPage {
         primaryStage.setTitle("Shopping Page");
         primaryStage.setScene(scene);
         primaryStage.show();
+        logoutBtn.setOnAction(e->{
+            LoginPage loginPage = new LoginPage();
+            loginPage.start(primaryStage);
+        });
     }
     //refresh product lists
     private void refreshProductList(ObservableList<Product> products) {
         productList.getChildren().clear();
         for (Product pdc : products) {
-            try {
-                VBox vb = new VBox();
-                vb.setAlignment(Pos.CENTER);
-                ImageView imageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream(pdc.getImageUrl()))));
-                imageView.setFitWidth(200);
-                imageView.setFitHeight(200);
+            if (pdc != null && pdc.getImageUrl() != null && !pdc.getImageUrl().isEmpty()) {
+                try {
+                    VBox vb = new VBox();
+                    vb.setAlignment(Pos.CENTER);
+                    String imgPath= pdc.getImageUrl();
+                      Image image = new Image(new File(imgPath).toURI().toString());
+                    System.out.println("Image Path: " + imgPath);
+                    ImageView imageView =new ImageView(image);
+                    imageView.setFitWidth(200);
+                    imageView.setFitHeight(200);
 
-                Label productLabel = new Label(pdc.getName());
-                Label productPrice = new Label("AED " + pdc.getPrice());
-                Button addToCart = new Button("ADD TO CART");
-                addToCart.setPadding(new Insets(10));
-                addToCart.setTextFill(Color.WHITE);
-                addToCart.setStyle("-fx-cursor:hand");
-                addToCart.setBackground(new Background(new BackgroundFill(Color.rgb(33, 150, 243),new CornerRadii(10),Insets.EMPTY)));
-                addToCart.setOnAction(event -> {
-                    alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle(pdc.getName());
-                    alert.setHeaderText(pdc.getName()+" has been Added to Cart");
-                    alert.setContentText("Thank you for choosing our product");
-                    alert.showAndWait();
-                    ProductInventory pi = new ProductInventory();
-                    pi.addToCart(pdc.getProductId());
-                });
-                VBox.setMargin(productLabel, new Insets(10, 0, 0, 0));
-                vb.getChildren().addAll(imageView, productLabel, productPrice, addToCart);
-                vb.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, new CornerRadii(15), Insets.EMPTY)));
-                vb.setPadding(new Insets(10, 10, 10, 10));
-                productList.getChildren().add(vb);
-            } catch (Exception e) {
-                System.out.println("Error displaying product: " + e.getMessage());
+                    Label productLabel = new Label(pdc.getName());
+                    Label productPrice = new Label("AED " + pdc.getPrice());
+                    Button addToCart = new Button("ADD TO CART");
+                    addToCart.setPadding(new Insets(10));
+                    addToCart.setTextFill(Color.WHITE);
+                    addToCart.setStyle("-fx-cursor:hand");
+                    addToCart.setBackground(new Background(new BackgroundFill(Color.rgb(33, 150, 243),new CornerRadii(10),Insets.EMPTY)));
+                    addToCart.setOnAction(event -> {
+                        alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle(pdc.getName());
+                        alert.setHeaderText(pdc.getName()+" has been Added to Cart");
+                        alert.setContentText("Thank you for choosing our product");
+                        alert.showAndWait();
+                        ProductInventory pi = new ProductInventory();
+                        pi.addToCart(pdc.getProductId());
+                    });
+                    VBox.setMargin(productLabel, new Insets(10, 0, 0, 0));
+                    vb.getChildren().addAll( imageView,productLabel, productPrice, addToCart);
+                    vb.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, new CornerRadii(15), Insets.EMPTY)));
+                    vb.setPadding(new Insets(10, 10, 10, 10));
+                    productList.getChildren().add(vb);
+                } catch (Exception e) {
+                    System.out.println("Error displaying product: " + e.getMessage());
+                }
             }
+
         }
     }
     private void handleLogout() {
@@ -237,7 +330,6 @@ public class ShoppingPage {
         ObservableList<Product> filtered = pi.searchProducts(query);
         refreshProductList(filtered);
     }
-
     public static void main(String[] args) {
         javafx.application.Application.launch(ShoppingApp.class);
     }

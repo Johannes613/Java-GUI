@@ -1,7 +1,2 @@
-
-1,Apple,20.0,/org/example/farmdelivery/images/img2.jpeg,1,Amazing,All
-2,Banana,21.0,/org/example/farmdelivery/images/img3.jpeg,1,Amazing,Milk Products
-2,Banana,21.0,/org/example/farmdelivery/images/img3.jpeg,1,Amazing,Milk Products
-1,Apple,20.0,/org/example/farmdelivery/images/img2.jpeg,1,Amazing,All
-5,Strawberry,24.0,/org/example/farmdelivery/images/img6.jpeg,1,Amazing,Cereal Products
-1,Apple,20.0,/org/example/farmdelivery/images/img2.jpeg,1,Amazing,All
+indalu,123,1,Mango,20.0,C:\Users\DELL\OneDrive\Imágenes\Screenshots\Screenshot 2025-05-28 131239.png,1,The best fruit,Fruits
+indalu,123,1,Mango,20.0,C:\Users\DELL\OneDrive\Imágenes\Screenshots\Screenshot 2025-05-28 131239.png,1,The best fruit,Fruits

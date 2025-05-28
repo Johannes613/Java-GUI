@@ -1,5 +1,8 @@
 package model;
 
+import javafx.collections.ObservableList;
+import model.Exceptions.OutOfSeasonException;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 public interface IProductSearch {
@@ -9,4 +12,5 @@ public interface IProductSearch {
 
     //    this method saves cart product into cart.txt
     void addToCart(int productId);
+    ObservableList<Product> filterBySeason(String season) throws OutOfSeasonException;
 }
