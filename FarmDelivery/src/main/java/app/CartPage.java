@@ -86,8 +86,6 @@ public class CartPage extends Application {
 
         VBox locationBox = new VBox(20, new Label("Location"),locationComboBox);
 
-
-
         phoneNumber.setPadding(new Insets(10));
         VBox phoneNumberBox = new VBox(20, new Label("Phone Number"), phoneNumber);
         phoneNumberBox.setAlignment(Pos.CENTER_LEFT);

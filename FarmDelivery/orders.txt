@@ -4,3 +4,9 @@ indalu,123,1,Mango,20.0,C:\Users\DELL\OneDrive\Imágenes\Screenshots\Screenshot 2
 indalu,123,1,Mango,20.0,C:\Users\DELL\OneDrive\Imágenes\Screenshots\Screenshot 2025-05-28 131239.png,0,The best fruit,Fruits
 indalu,123,1,Mango,20.0,C:\Users\DELL\OneDrive\Imágenes\Screenshots\Screenshot 2025-05-28 131239.png,0,The best fruit,Fruits
 indalu,123,1,Mango,20.0,C:\Users\DELL\OneDrive\Imágenes\Screenshots\Screenshot 2025-05-28 131239.png,1,The best fruit,Fruits
+indalu,123,1,Mango,20.0,C:\Users\DELL\OneDrive\Imágenes\Screenshots\Screenshot 2025-05-28 131239.png,1,The best fruit,Fruits
+indalu,123,1,Mango,20.0,C:\Users\DELL\OneDrive\Imágenes\Screenshots\Screenshot 2025-05-28 131239.png,1,The best fruit,Fruits
+yohannis,123,2,Burger,12.0,C:\Users\DELL\OneDrive\Desktop\AdminImages\photo_1_2025-05-26_18-09-35.jpg,1,The best,Fruits
+yohannis,123,2,Burger,12.0,C:\Users\DELL\OneDrive\Desktop\AdminImages\photo_1_2025-05-26_18-09-35.jpg,1,The best,Fruits
+indalu,123,2,Burger,12.0,C:\Users\DELL\OneDrive\Desktop\AdminImages\photo_1_2025-05-26_18-09-35.jpg,1,The best,Fruits
+test,123,2,Burger,12.0,C:\Users\DELL\OneDrive\Desktop\AdminImages\photo_1_2025-05-26_18-09-35.jpg,1,The best,Fruits

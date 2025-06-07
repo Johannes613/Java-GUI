@@ -1,1 +1,3 @@
-yo,indalu,123
+yo@gmail.com,yohannis,123
+ee,indalu,123
+test@gmail.com,test,123

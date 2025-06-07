@@ -3,7 +3,6 @@ package model;
 
 import javafx.collections.ObservableList;
 import model.Exceptions.OutOfSeasonException;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 

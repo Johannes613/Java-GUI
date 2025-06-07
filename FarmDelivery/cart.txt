@@ -1,2 +1,0 @@
-indalu,123,1,Mango,20.0,C:\Users\DELL\OneDrive\Imágenes\Screenshots\Screenshot 2025-05-28 131239.png,1,The best fruit,Fruits
-indalu,123,1,Mango,20.0,C:\Users\DELL\OneDrive\Imágenes\Screenshots\Screenshot 2025-05-28 131239.png,1,The best fruit,Fruits

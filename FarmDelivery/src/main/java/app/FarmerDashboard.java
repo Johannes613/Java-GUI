@@ -12,15 +12,19 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Order;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import model.Product;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 public class FarmerDashboard extends Application {
-    ArrayList<Product> productList = new ArrayList<>();
-    ArrayList<Order> ordersList = new ArrayList<>();
-    ArrayList<Product> orderProductList = new ArrayList<>();
+    private ArrayList<Product> productList = new ArrayList<>();
+    private ArrayList<Order> ordersList = new ArrayList<>();
+    private ArrayList<Product> orderProductList = new ArrayList<>();
+    private VBox subscriberContent = new VBox(15);
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -32,6 +36,7 @@ public class FarmerDashboard extends Application {
         header.setPadding(new Insets(7));
         header.getChildren().add(headerLabel);
         header.setAlignment(Pos.CENTER);
+
         // side nav section
         VBox sideNav = new VBox(10);
         sideNav.setPadding(new Insets(20));
@@ -47,91 +52,82 @@ public class FarmerDashboard extends Application {
             eachBtn.setPrefHeight(33);
             eachBtn.setStyle("-fx-background-color:#2e7d32; -fx-text-fill:white;-fx-font-weight:bold; -fx-font-size:13px;");
         }
-        sideNav.getChildren().addAll(addProductBtn, listProductBtn, ordersBtn, logoutBtn);
+        Button subscribersBtn = new Button("Subscribers");
+        subscribersBtn.setMaxWidth(150);
+        subscribersBtn.setPrefHeight(33);
+        subscribersBtn.setStyle("-fx-background-color:#2e7d32; -fx-text-fill:white;-fx-font-weight:bold; -fx-font-size:13px;");
+        sideNav.getChildren().addAll(addProductBtn, listProductBtn, ordersBtn,subscribersBtn, logoutBtn);
 
+
+
+// add product content
         VBox addProductContent = new VBox(15);
-        VBox listProductContent = new VBox(15);
-        VBox orderProductContent = new VBox(15);
-        // add product content
         addProductContent.setStyle("-fx-background-color: #f1f8e9;");
-        addProductContent.setPadding(new Insets(20));
-        Label addProduct = new Label("Add Product section");
-        Label orders = new Label("Orders section");
+        addProductContent.setPadding(new Insets(25));
+
         Label formTitle = new Label("Add New Product");
-        formTitle.setFont(Font.font("Arial", FontWeight.BOLD, 18));
-        Label nameLabel = new Label("Product Name: ");
+        formTitle.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        formTitle.setStyle("-fx-text-fill: #2e7d32;");
+
         TextField nameField = new TextField();
         nameField.setPromptText("Enter product name: ");
-        Label quantityLabelInput = new Label("Quantity: ");
+        nameField.setStyle("-fx-font-size: 14px; -fx-background-color: #ffffff; -fx-border-color: #c5e1a5; -fx-border-radius: 5;");
+        Label nameLabel = new Label("Product Name:");
+
         TextField quantityField = new TextField();
         quantityField.setPromptText("Enter quantity: ");
-        //product category
-        Label categoryLabel=new Label("Product Category: ");
+        quantityField.setStyle("-fx-font-size: 14px; -fx-background-color: #ffffff; -fx-border-color: #c5e1a5; -fx-border-radius: 5;");
+        Label quantityLabelInput = new Label("Quantity:");
+
+        Label categoryLabel = new Label("Product Category:");
         ComboBox<String> categoryComboBox = new ComboBox<>();
-        categoryComboBox.getItems().addAll(    "Milk Products",
-                "Fruits",
-                "Vegetables",
-                "Cereal Products",
-                "Cereal",
-                "Meat & Poultry",
-                "Fish & Seafood",
-                "Bakery Products",
-                "Eggs",
-                "Spices & Condiments",
-                "Oils & Fats",
-                "Snacks & Chips",
-                "Beverages",
-                "Dry Fruits & Nuts",
-                "Grains & Pulses",
-                "Legumes",
-                "Herbs",
-                "Frozen Foods",
-                "Organic Products",
-                "Dairy Alternatives",
-                "Baby Products",
-                "Health & Nutrition",
-                "Cleaning Supplies",
-                "Personal Care",
-                "Pet Supplies",
-                "Ready-to-Eat Foods",
-                "Canned Goods",
-                "Sauces & Pickles",
-                "Flours",
-                "Sugars & Sweeteners"
+        categoryComboBox.getItems().addAll(
+                "Milk Products", "Fruits", "Vegetables", "Cereal Products", "Cereal", "Meat & Poultry",
+                "Fish & Seafood", "Bakery Products", "Eggs", "Spices & Condiments", "Oils & Fats", "Snacks & Chips",
+                "Beverages", "Dry Fruits & Nuts", "Grains & Pulses", "Legumes", "Herbs", "Frozen Foods",
+                "Organic Products", "Dairy Alternatives", "Baby Products", "Health & Nutrition", "Cleaning Supplies",
+                "Personal Care", "Pet Supplies", "Ready-to-Eat Foods", "Canned Goods", "Sauces & Pickles", "Flours", "Sugars & Sweeteners"
         );
         categoryComboBox.setPromptText("Select Product Category");
-        categoryComboBox.setStyle("-fx-background-color: #e8f5e9; -fx-text-fill: black; -fx-font-size: 14px;");
-        categoryComboBox.setPrefWidth(200);
-        categoryLabel.setLabelFor(categoryComboBox);
-//        season selection
+        categoryComboBox.setStyle("-fx-background-color: #ffffff; -fx-border-color: #c5e1a5; -fx-font-size: 14px;");
+        categoryComboBox.setPrefWidth(220);
+
+        Label seasonLabel = new Label("Select Season:");
         ComboBox<String> seasonComboBox = new ComboBox<>();
         seasonComboBox.getItems().addAll("Spring", "Summer", "Autumn", "Winter");
-        Label seasonLabel = new Label("Select Season: ");
         seasonComboBox.setPromptText("Select Season");
-        seasonComboBox.setStyle("-fx-background-color: #e8f5e9; -fx-text-fill: black; -fx-font-size: 14px;");
-        seasonComboBox.setPrefWidth(200);
-        seasonLabel.setLabelFor(seasonComboBox);
-        // description and price
-        Label descLabel = new Label("Description: ");
+        seasonComboBox.setStyle("-fx-background-color: #ffffff; -fx-border-color: #c5e1a5; -fx-font-size: 14px;");
+        seasonComboBox.setPrefWidth(220);
+
+        Label descLabel = new Label("Description:");
         TextArea descArea = new TextArea();
-        descArea.setPromptText("Enter product description: ");
+        descArea.setPromptText("Enter product description:");
         descArea.setPrefRowCount(4);
-        Label priceLabel = new Label("Product Price: ");
+        descArea.setStyle("-fx-font-size: 14px; -fx-border-color: #c5e1a5; -fx-border-radius: 5;");
+
+        Label priceLabel = new Label("Product Price:");
         TextField priceField = new TextField();
-        priceField.setPromptText("Enter product price: ");
-        Label selectDateLabel = new Label("Select Calendar: ");
-        Button selectDateBtn = new Button("Click to SelectDate");
-        selectDateBtn.setStyle("-fx-background-color:#2e7d32; -fx-text-fill:white;-fx-font-weight:bold;-fx-font-size:13px");
+        priceField.setPromptText("Enter product price:");
+        priceField.setStyle("-fx-font-size: 14px; -fx-background-color: #ffffff; -fx-border-color: #c5e1a5; -fx-border-radius: 5;");
+
+        Label selectDateLabel = new Label("Select Calendar:");
+        Button selectDateBtn = new Button("Click to Select Date");
+        selectDateBtn.setStyle("-fx-background-color: #388e3c; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 13px;");
         DatePicker datePicker = new DatePicker();
         datePicker.setPromptText("Select Harvest Date");
         datePicker.setVisible(false);
-        selectDateBtn.setOnAction(e ->datePicker.setVisible(true));
+        datePicker.setStyle("-fx-font-size: 13px;");
+
+        selectDateBtn.setOnAction(e -> datePicker.setVisible(true));
+
+
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select Image of the product");
+        fileChooser.setTitle("Select Image of the Product");
         String[] filePath = new String[1];
-        Label imageUploadLabel = new Label("Upload Product Image: ");
+
+        Label imageUploadLabel = new Label("Upload Product Image:");
         Button imgUploadBtn = new Button("Click to Upload Image");
-        imgUploadBtn.setStyle("-fx-background-color:#2e7d32; -fx-text-fill:white;-fx-font-weight:bold;-fx-font-size:13px");
+        imgUploadBtn.setStyle("-fx-background-color: #388e3c; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 13px;");
         imgUploadBtn.setOnAction(e -> {
             File selectedFile = fileChooser.showOpenDialog(null);
             if (selectedFile != null) {
@@ -139,8 +135,10 @@ public class FarmerDashboard extends Application {
                 imgUploadBtn.setText("Selected: " + selectedFile.getName());
             }
         });
+
+
         Button saveBtn = new Button("Save Product");
-        saveBtn.setStyle("-fx-background-color:#2e7d10; -fx-text-fill:white;-fx-font-weight:bold;-fx-font-size:13px");
+        saveBtn.setStyle("-fx-background-color: #2e7d10; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px;");
         saveBtn.setOnAction(e -> {
             try {
                 String productCategory = categoryComboBox.getValue();
@@ -158,20 +156,37 @@ public class FarmerDashboard extends Application {
                 alert.show();
             } catch (NumberFormatException ex) {
                 System.out.println("Incorrect Number format");
-                Alert alert = new Alert(Alert.AlertType.WARNING,"Invalid Number format");
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Invalid Number format");
                 alert.show();
             }
         });
+
+
         // layout structure
         BorderPane layout = new BorderPane();
         layout.setLeft(sideNav);
         layout.setTop(header);
         layout.setCenter(addProductContent);
-        addProductBtn.setOnAction(e -> layout.setCenter(addProductContent));
+
+        subscribersBtn.setOnAction(e -> {
+            fetchSubscribers();
+            subscriberContent.setPadding(new Insets(30));
+            layout.setCenter(subscriberContent);
+        });
+
         // list product content
+        VBox listProductContent = new VBox(15);
         listProductContent.setPadding(new Insets(30));
         Label listProduct = new Label("List Product Section");
         listProduct.setStyle("-fx-font-weight: bold;-fx-font-size:22px");
+
+        // orders content
+        VBox orderProductContent = new VBox(15);
+        orderProductContent.setPadding(new Insets(30));
+        Label listOrders = new Label("Orders Section");
+        listOrders.setStyle("-fx-font-weight: bold;-fx-font-size:22px");
+
+
         listProductBtn.setOnAction(e -> {
             fetchProducts();
             listProductContent.getChildren().clear();
@@ -199,9 +214,6 @@ public class FarmerDashboard extends Application {
             }
             layout.setCenter(listProductContent);
         });
-        orderProductContent.setPadding(new Insets(30));
-        Label listOrders = new Label("Orders Section");
-        listOrders.setStyle("-fx-font-weight: bold;-fx-font-size:22px");
         ordersBtn.setOnAction(e->{
             fetchOrders();
             orderProductContent.getChildren().clear();
@@ -209,7 +221,8 @@ public class FarmerDashboard extends Application {
             for(Order eachOrder: ordersList){
                 String path = eachOrder.getProduct().getImageUrl();
                 System.out.println("The image path: " + path);
-                ImageView imageView = new ImageView(new Image(path));
+                Image image = new Image(new File(path).toURI().toString());
+                ImageView imageView = new ImageView(image);
                 imageView.setFitWidth(150);
                 imageView.setFitHeight(100);
                 Label productNameLabel = new Label(eachOrder.getProduct().getName());
@@ -228,12 +241,18 @@ public class FarmerDashboard extends Application {
             layout.setCenter(orderProductContent);
 
         });
+        addProductBtn.setOnAction(e -> layout.setCenter(addProductContent));
         logoutBtn.setOnAction(e->{
             LoginPage loginPage = new LoginPage();
             loginPage.start(primaryStage);
         });
+
+
         addProductContent.getChildren().addAll(formTitle, nameLabel, nameField, quantityLabelInput, quantityField,categoryComboBox,seasonComboBox, descLabel, descArea, priceLabel, priceField, selectDateLabel,datePicker,selectDateBtn, imageUploadLabel, imgUploadBtn,saveBtn);
-        orderProductContent.getChildren().add(orders);
+        orderProductContent.getChildren().add(listOrders);
+
+
+        // scene and stage configuration
         Scene page = new Scene(layout, 1200, 800);
         primaryStage.setTitle("Farmer Dashboard");
         primaryStage.setScene(page);
@@ -253,10 +272,8 @@ public class FarmerDashboard extends Application {
         return length;
     }
     public void saveProduct(Product product){
-        System.out.println("Writing file....");
         try(FileWriter writer =new FileWriter("product.txt",true)){
             writer.write(product.toFileString()+"\n");
-            System.out.println("File written successfully");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -274,10 +291,9 @@ public class FarmerDashboard extends Application {
                 String prdDsc = parameters[5];
                 double prdPrice = Double.parseDouble(parameters[2]);
                 int quantity = Integer.parseInt(parameters[4]);
-              LocalDate dateSelected = LocalDate.parse(parameters[6]);
-//                LocalDate dateSelected = LocalDate.now();
+                LocalDate dateSelected = LocalDate.parse(parameters[6]);
                 String imgUrl = parameters[3];
-         String season = parameters[7];
+                String season = parameters[7];
                 String productCategory = parameters[8];
                 Product newProduct = new Product(prdId, prdName, prdDsc, prdPrice, quantity, dateSelected, imgUrl, season, productCategory);
                 productList.add(newProduct);
@@ -318,10 +334,61 @@ public class FarmerDashboard extends Application {
             throw new RuntimeException(e);
         }
     }
+
+    private void fetchSubscribers() {
+        subscriberContent.getChildren().clear();
+
+        Label subscriberTitle = new Label("Subscriber List");
+        subscriberTitle.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2e7d32;");
+        subscriberTitle.setPadding(new Insets(10, 0, 20, 0));
+        subscriberContent.getChildren().add(subscriberTitle);
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("subscription.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] tokens = line.split(",");
+                if (tokens.length >= 4) {
+                    String name = tokens[0];
+                    String email = tokens[1];
+                    String product = tokens[2];
+                    String plan = tokens[3];
+
+                    Label nameLabel = new Label("Name: " + name);
+                    Label emailLabel = new Label("Email: " + email);
+                    Label productLabel = new Label("Product: " + product);
+                    Label planLabel = new Label("Plan: " + plan);
+
+                    nameLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
+                    emailLabel.setStyle("-fx-font-size: 14px;");
+                    productLabel.setStyle("-fx-font-size: 14px;");
+                    planLabel.setStyle("-fx-font-size: 14px;");
+
+                    VBox subscriberBox = new VBox(5, nameLabel, emailLabel, productLabel, planLabel);
+                    subscriberBox.setPadding(new Insets(15));
+                    subscriberBox.setStyle(
+                            "-fx-background-color: #f1f8e9;" +
+                                    "-fx-background-radius: 10;" +
+                                    "-fx-border-color: #c5e1a5;" +
+                                    "-fx-border-width: 1;" +
+                                    "-fx-border-radius: 10;"
+                    );
+
+                    VBox.setMargin(subscriberBox, new Insets(10, 0, 10, 0));
+                    subscriberContent.getChildren().add(subscriberBox);
+                }
+            }
+        } catch (IOException e) {
+            Label errorLabel = new Label("Error reading subscription file.");
+            errorLabel.setStyle("-fx-text-fill: red; -fx-font-size: 14px;");
+            subscriberContent.getChildren().add(errorLabel);
+        }
+    }
+
+
+
     public static void main(String[] args) {
         launch(FarmerDashboard.FarmerApp.class);
     }
-    // This class wraps the JavaFX Application launch
     public static class FarmerApp extends Application {
         @Override
         public void start(Stage primaryStage) {

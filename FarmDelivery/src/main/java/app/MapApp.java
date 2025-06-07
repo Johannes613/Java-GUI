@@ -40,20 +40,6 @@ public class MapApp extends Application {
         } catch (Exception e) {
             System.err.println("Error loading HTML file: " + e.getMessage());
         }
-        class JavaBridge {
-            private final Stage stage;
-            public JavaBridge(Stage stage) {
-                this.stage = stage;
-            }
-            public void returnToCart() {
-                System.out.println("JavaScript called returnToCart()");
-                try {
-                    navigateToCartPage(stage);
-                } catch (Exception e) {
-                    System.err.println("Error navigating to cart: " + e.getMessage());
-                }
-            }
-        }
         primaryStage.setScene(new Scene(webView, 1024, 768));
         primaryStage.setTitle("Delivery Tracking Map");
         primaryStage.show();

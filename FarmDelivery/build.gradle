@@ -6,7 +6,8 @@ plugins {
     id 'org.beryx.jlink' version '2.25.0'
 }
 
-version '1.0-SNAPSHOT'
+group = 'org.example'
+version = '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
@@ -24,9 +25,9 @@ tasks.withType(JavaCompile) {
 }
 
 application {
-    // Set your main module and main class if using modules
-    // mainModule = 'org.example.farmdelivery'
-    // mainClass = 'org.example.farmdelivery.HelloApplication'
+    // ✅ Define your module name and main class (update if your main class is different)
+    mainModule = 'org.example.farmdelivery'
+    mainClass = 'app.Test' // or 'app.Main' or whatever your entry point is
 }
 
 javafx {
@@ -35,13 +36,14 @@ javafx {
 }
 
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+    // ✅ Testing
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
 
-    // JSON library
+    // ✅ JSON support
     implementation 'org.json:json:20230227'
 
-    // JavaFX dependencies for platform-specific modules
+    // ✅ Platform-specific JavaFX modules (fixes runtime issue)
     def platform = org.gradle.internal.os.OperatingSystem.current().isWindows() ? "win" :
             org.gradle.internal.os.OperatingSystem.current().isMacOsX() ? "mac" : "linux"
 

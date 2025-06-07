@@ -82,21 +82,17 @@ public class Product implements Comparable<Product>{
         return price;
     }
 
-    public void setPrice(int price) {
+    public String getDescription() {
+        return description;
+    }
+
+    public void setPrice(double price) {
         if(price > 0){
             this.price = price;
         }
         else{
             throw new IllegalArgumentException("Price has to be greater than 0");
         }
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 
     public void setProductCategory(String productCategory) {
@@ -143,7 +139,7 @@ public class Product implements Comparable<Product>{
     public String toFileString() {
         return productId + "," + name + "," + price + "," + imageUrl + "," + quantityAvailable + "," + description + "," + harvestDate + "," + season + "," + productCategory;
     }
-    //the following methods are important
+    //the following methods are important for sorting
     public int compareTo(Product o) {
         return (int) (this.price-o.getPrice());
     }

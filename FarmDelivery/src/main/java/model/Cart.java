@@ -52,7 +52,6 @@ public class Cart {
     public ArrayList<Product> getCartItems() {
         return cartItems;
     }
-
     public double getTotalPrice(){
         double total=0;
         for(Product pdc:cartItems){
