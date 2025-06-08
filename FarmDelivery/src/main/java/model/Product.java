@@ -16,6 +16,7 @@ public class Product implements Comparable<Product>{
     private String productCategory;
     private String season;
     private int quantity=1;
+    public Product(){};
     public Product(int productId, String name, String description, double price, int quantityAvailable, LocalDate harvestDate,String imageUrl,String season,String productCategory) {
         this.productId = productId;
         this.name = name;

@@ -1,9 +1,6 @@
 package model;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class Customer {
@@ -32,16 +29,37 @@ public class Customer {
     // generates a random id to the customer
     private int generateId() {
         Random random = new Random();
-        return random.nextInt(9000) + 1000;
+        int randInt = random.nextInt(9000) + 1000;
+        return randInt;
     }
     // adds a product to a specific customer
     public void saveCustomerProduct(Product product) {
-        try (FileWriter writer = new FileWriter("product.txt", true)) {
+        String path = "product.txt";
+        try (FileWriter writer = new FileWriter(path, true)) {
             writer.write(product.toFileString() + "\n");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+    // list all customers cart
+    public void listCustomerShopping(){
+        String line;
+        String path = "cart.txt";
+        try(BufferedReader reader = new BufferedReader(new FileReader(path))){
+            while((line = reader.readLine()) != null){
+                String[] list = line.split(",");
+                int id = Integer.parseInt(list[0]);
+                String name = list[1];
+                int price = Integer.parseInt(list[2]);
+                String imgUrl = list[3];
+                Product cartProduct = new Product(id,name,price,imgUrl);
+                shoppingCart.add(cartProduct);
+            }
+        }catch (IOException ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+
 
     // returns the number if products that customer added
     public int getNumOfCustomerProducts() {
@@ -117,7 +135,11 @@ public class Customer {
     }
 
     public void setPhone(String phone) {
-        this.phone = phone;
+        if(phone.length() < 10){
+            System.out.println("Please enter a correct phone number");
+        }else{
+            this.phone = phone;
+        }
     }
 
     public String getDeliveryAddress() {

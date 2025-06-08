@@ -1,15 +1,13 @@
 package model;
 
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Farmer extends User {
     private ArrayList<Product> productList;
+
 
     public Farmer(int id, String name, String email){
         super(id,name,email);
@@ -23,7 +21,8 @@ public class Farmer extends User {
     // it gives the number of the farmers exists
     public int getNumOfFarmers() {
         int length = 0;
-        try (Scanner input = new Scanner(new File("farmer.txt"))) {
+        String filePath = "farmer.txt";
+        try (Scanner input = new Scanner(new File(filePath))) {
             while (input.hasNext()) {
                 length++;
                 input.nextLine();
@@ -40,14 +39,14 @@ public class Farmer extends User {
     }
     // adds a product to a specific farmer
     public void saveFarmerProduct(Product product){
-            try(FileWriter writer =new FileWriter("product.txt",true)){
+            String filePath = "product.txt";
+            try(FileWriter writer =new FileWriter(filePath,true)){
                 writer.write(product.toFileString()+"\n");
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
 
     }
-
     // returns the number of products exist in a specific farmer
     public int getNumOfFarmerProducts() {
         int length = 0;

@@ -25,9 +25,9 @@ tasks.withType(JavaCompile) {
 }
 
 application {
-    // ✅ Define your module name and main class (update if your main class is different)
+    // ✅ Set your module name and main class
     mainModule = 'org.example.farmdelivery'
-    mainClass = 'app.Test' // or 'app.Main' or whatever your entry point is
+    mainClass = 'app.Test' // ✅ Change this if your entry point is different
 }
 
 javafx {
@@ -36,14 +36,14 @@ javafx {
 }
 
 dependencies {
-    // ✅ Testing
+    // ✅ JUnit
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
 
-    // ✅ JSON support
+    // ✅ JSON library
     implementation 'org.json:json:20230227'
 
-    // ✅ Platform-specific JavaFX modules (fixes runtime issue)
+    // ✅ Platform-specific JavaFX modules
     def platform = org.gradle.internal.os.OperatingSystem.current().isWindows() ? "win" :
             org.gradle.internal.os.OperatingSystem.current().isMacOsX() ? "mac" : "linux"
 
@@ -66,4 +66,22 @@ jlink {
 
 jlinkZip {
     group = 'distribution'
+}
+
+tasks.register('fatJar', Jar) {
+    archiveBaseName = 'FarmDeliveryApp'
+    archiveVersion = '1.0'
+    manifest {
+        attributes(
+                'Main-Class': application.mainClass.get(),
+                'Multi-Release': 'true'
+        )
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from {
+        configurations.runtimeClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+    with jar
 }

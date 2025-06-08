@@ -1,2 +1,2 @@
-1,Mango,20.0,C:\Users\DELL\OneDrive\Imágenes\Screenshots\Screenshot 2025-05-28 131239.png,12,The best fruit,2025-06-07,Spring,Fruits
 2,Burger,12.0,C:\Users\DELL\OneDrive\Desktop\AdminImages\photo_1_2025-05-26_18-09-35.jpg,12,The best,2025-06-05,Summer,Fruits
+1,Avocado,120.0,C:\Users\DELL\OneDrive\Desktop\AdminImages\photo_6_2025-05-26_18-09-35.jpg,13,This is the best fruit ever,2025-06-19,Summer,Fruits

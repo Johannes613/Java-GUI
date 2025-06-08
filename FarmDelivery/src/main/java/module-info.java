@@ -8,4 +8,6 @@ module org.example.farmdelivery {
     exports app;
 
     opens app to javafx.fxml;
+    exports extra;
+    opens extra to javafx.fxml;
 }
