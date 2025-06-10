@@ -129,7 +129,7 @@ public class ShoppingPage {
         banner.setBackground(new Background(new BackgroundFill(Color.rgb(173, 216, 230),new CornerRadii(10),Insets.EMPTY)));
         banner.setAlignment(Pos.CENTER);
         banner.setPadding(new Insets(30));
-        Label bannerTitle = new Label("Welcome to UAE Farm Product Delivery App!");
+        Label bannerTitle = new Label("Welcome to EatFresh Product Delivery App!");
         bannerTitle.setTextFill(Color.GREEN);
         bannerTitle.setFont(Font.font(40));
         bannerTitle.setStyle("-fx-font-weight:700");

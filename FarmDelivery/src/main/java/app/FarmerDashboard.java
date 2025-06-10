@@ -12,6 +12,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import model.Exceptions.HarvestDateException;
 import model.Order;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -222,6 +223,16 @@ public class FarmerDashboard extends Application {
                 String productCategory = categoryComboBox.getValue();
                 String season = seasonComboBox.getValue();
                 String name = nameField.getText();
+                LocalDate dateSelected1 = datePicker.getValue();
+                if (dateSelected1.isBefore(LocalDate.now())) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Invalid Date");
+                    alert.setHeaderText("The selected date cannot be in the past.");
+                    alert.setContentText("Please choose a current or future date to proceed.");
+                    alert.showAndWait();
+                    new HarvestDateException("Invalid date selected");
+                    return; // Stop the submission
+                }
                 // Check for empty fields or null selections
                 if (name.isEmpty() || quantityField.getText().isEmpty() || priceField.getText().isEmpty() ||
                         productCategory == null || season == null || descArea.getText().isEmpty() || datePicker.getValue() == null ||

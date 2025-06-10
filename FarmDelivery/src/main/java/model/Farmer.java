@@ -63,7 +63,8 @@ public class Farmer extends User {
     }
     // registers a farmer to the txt file
     public void addFarmerToFile(Farmer farmer){
-        try(FileWriter writer =new FileWriter("farmer.txt",true)){
+        String farmerPath = "farmer.txt";
+        try(FileWriter writer =new FileWriter(farmerPath,true)){
             writer.write(farmer.toString()+"\n");
         } catch (IOException e) {
             System.out.println(e.getMessage());

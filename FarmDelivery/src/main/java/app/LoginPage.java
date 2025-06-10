@@ -109,8 +109,14 @@ public class LoginPage extends Application {
                 }
             } else {
                 try (FileWriter writer = new FileWriter(path, true)) {
-                    writer.write(emailField.getText().trim() + "," + usernameField.getText().trim() + "," + passwordField.getText().trim() + "\n");
-                    showAlert("Account Created", "Your account was successfully created.");
+                    if(emailField.getText().trim().isEmpty() || usernameField.getText().trim().isEmpty() || passwordField.getText().isEmpty()){
+                        Alert accAlert  = new Alert(Alert.AlertType.ERROR,"Please make sure your inputs are complete");
+                        accAlert.show();
+                    }
+                    else{
+                        writer.write(emailField.getText().trim() + "," + usernameField.getText().trim() + "," + passwordField.getText().trim() + "\n");
+                        showAlert("Account Created", "Your account was successfully created.");
+                    }
                 } catch (IOException ex) {
                     showAlert("Error", "File write error: " + ex.getMessage());
                 }

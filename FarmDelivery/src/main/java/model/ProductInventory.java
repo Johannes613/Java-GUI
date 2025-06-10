@@ -50,7 +50,7 @@ public class ProductInventory implements IProductSearch {
     }
     //    format cart items in the form of comma separated value
     public String formatCartItem(String userName,String password,int prodId,Product pdc){
-        return userName.trim() + "," + password.trim() + "," +prodId+","+pdc.getName()+","+pdc.getPrice()+","+pdc.getImageUrl()+","+pdc.getQuantityAvailable()+","+pdc.getDescription()+","+pdc.getProductCategory()+"\n";
+        return userName.trim() + "," + password.trim() + "," +prodId+","+pdc.getName()+","+pdc.getPrice()+","+pdc.getImageUrl()+","+pdc.getQuantity()+","+pdc.getDescription()+","+pdc.getProductCategory()+"\n";
     }
     //filter product based on category
     public ObservableList<Product> getFilteredProducts(String category){

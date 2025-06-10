@@ -16,7 +16,6 @@ public class Customer {
         this.shoppingCart = new ArrayList<>();
     }
 
-
     public Customer(String name, String email, String phone, String deliveryAddress) {
         this.id = generateId();
         this.name = name;
@@ -41,7 +40,7 @@ public class Customer {
             throw new RuntimeException(e);
         }
     }
-    // list all customers cart
+    // list all customers cart(id,name,price,img)
     public void listCustomerShopping(){
         String line;
         String path = "cart.txt";
@@ -50,7 +49,7 @@ public class Customer {
                 String[] list = line.split(",");
                 int id = Integer.parseInt(list[0]);
                 String name = list[1];
-                int price = Integer.parseInt(list[2]);
+                double price = Double.parseDouble(list[2]);
                 String imgUrl = list[3];
                 Product cartProduct = new Product(id,name,price,imgUrl);
                 shoppingCart.add(cartProduct);
@@ -59,7 +58,6 @@ public class Customer {
             System.out.println(ex.getMessage());
         }
     }
-
 
     // returns the number if products that customer added
     public int getNumOfCustomerProducts() {
@@ -103,7 +101,12 @@ public class Customer {
     }
 
     public void removeFromCart(Product product) {
-        shoppingCart.remove(product);
+        if(shoppingCart.contains(product)){
+            shoppingCart.remove(product);
+        }
+        else{
+            System.out.println("The product doesn't exist!!!");
+        }
     }
 
     public List<Product> getShoppingCart() {

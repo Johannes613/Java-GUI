@@ -1,2 +1,10 @@
-2,Burger,12.0,C:\Users\DELL\OneDrive\Desktop\AdminImages\photo_1_2025-05-26_18-09-35.jpg,12,The best,2025-06-05,Summer,Fruits
-1,Avocado,120.0,C:\Users\DELL\OneDrive\Desktop\AdminImages\photo_6_2025-05-26_18-09-35.jpg,13,This is the best fruit ever,2025-06-19,Summer,Fruits
+5,Corn,12.0,C:\Users\DELL\Downloads\fruits\fruits\637896935689831273_107.png,23,fdgdyjt,2025-06-20,Summer,Cereal Products
+2,Garlic,23.0,C:\Users\DELL\Downloads\fruits\fruits\637896936576687190_175.png,34,dfg,2025-06-29,Autumn,Vegetables
+3,Onion,45.0,C:\Users\DELL\Downloads\fruits\fruits\637896937082706335_139.png,54,sdfsad,2025-07-06,Spring,Vegetables
+4,Potato,12.0,C:\Users\DELL\Downloads\fruits\fruits\637896937425654955_142.png,23,ege,2025-07-05,Winter,Vegetables
+5,Meat,52.0,C:\Users\DELL\Downloads\fruits\fruits\637897047200935817_381.png,10,sdf,2025-07-02,Autumn,Meat & Poultry
+6,Mango,30.0,C:\Users\DELL\Downloads\fruits\fruits\637892764714130302_135.png,50,sdgf,2025-06-27,Autumn,Fruits
+7,Carrot,50.0,C:\Users\DELL\Downloads\fruits\fruits\637896937688804435_113.png,32,asdfg,2025-06-28,Autumn,Vegetables
+8,Avocado,10.0,C:\Users\DELL\Downloads\fruits\fruits\637892746665514411_105.png,32,dsfg,2025-06-26,Autumn,Fruits
+9,Cabbage,30.0,C:\Users\DELL\Downloads\fruits\fruits\637892749519027146_111.png,102,fh,2025-06-10,Autumn,Vegetables
+10,Coconut,20.0,C:\Users\DELL\Downloads\fruits\fruits\637892751638235764_121.png,12,wdf,2025-06-26,Summer,Fruits
